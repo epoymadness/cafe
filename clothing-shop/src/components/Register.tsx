@@ -2,23 +2,38 @@ import React, { useState } from "react";
 import { Builder } from "../types/Register";
 
 export default function Register() {
-  const [firstname, setFirstname] = useState<string>("");
-  const [lastname, setLastname] = useState<string>("");
+  const [name, setName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [role, setRole] = useState<string>("");
 
   const register = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const newUser = new Builder()
-      .setFirstname(firstname)
-      .setLastname(lastname)
+      .setName(name)
       .setUsername(username)
       .setPassword(password)
       .setEmail(email)
+      .setRole(role)
       .build();
-    console.log(newUser);
+
+    fetch("http://localhost:5000/saveuser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser.toJSON()),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => console.log("Response from server:", data))
+      .catch((err) => console.error("Fetch error:", err));
   };
 
   return (
@@ -26,16 +41,9 @@ export default function Register() {
       <form onSubmit={register}>
         <input
           type="text"
-          placeholder="firstname"
-          value={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
-          className="text-text"
-        />
-        <input
-          type="text"
-          placeholder="lastname"
-          value={lastname}
-          onChange={(e) => setLastname(e.target.value)}
+          placeholder="full name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="text-text"
         />
         <input
@@ -59,7 +67,13 @@ export default function Register() {
           onChange={(e) => setPassword(e.target.value)}
           className="text-text"
         />
-
+        <input
+          type="text"
+          placeholder="key"
+          value={role}
+          className="text-text"
+          onChange={(e) => setRole(e.target.value)}
+        />
         <button type="submit">Register</button>
       </form>
     </div>

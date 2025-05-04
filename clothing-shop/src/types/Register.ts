@@ -1,30 +1,26 @@
 export class Person {
-  private firstname: string;
-  private lastname: string;
+  private name: string;
   private username: string;
   private password: string;
   private email: string;
+  private role: string;
 
   constructor(
-    firstname: string,
-    lastname: string,
+    name: string,
     username: string,
     password: string,
-    email: string
+    email: string,
+    role: string
   ) {
-    this.firstname = firstname;
-    this.lastname = lastname;
+    this.name = name;
     this.password = password;
     this.username = username;
     this.email = email;
+    this.role = role;
   }
 
-  getFirstname(): string {
-    return this.firstname;
-  }
-
-  getLastname(): string {
-    return this.lastname;
+  getName(): string {
+    return this.name;
   }
 
   getUsername(): string {
@@ -38,22 +34,31 @@ export class Person {
   getEmail(): string {
     return this.email;
   }
+
+  getRole(): string {
+    return this.role;
+  }
+
+  toJSON(): object {
+    return {
+      name: this.name,
+      username: this.username,
+      password: this.password,
+      email: this.email,
+      role: this.role,
+    };
+  }
 }
 
 export class Builder {
-  public firstname: string = "";
-  public lastname: string = "";
+  public name: string = " ";
   public username: string = "";
   public password: string = "";
   public email: string = "";
+  public role: string = " ";
 
-  setFirstname(firstname: string): Builder {
-    this.firstname = firstname;
-    return this;
-  }
-
-  setLastname(lastname: string): Builder {
-    this.lastname = lastname;
+  setName(name: string): Builder {
+    this.name = name;
     return this;
   }
 
@@ -72,13 +77,22 @@ export class Builder {
     return this;
   }
 
+  setRole(role: string): Builder {
+    if (role === "12345") {
+      this.role = "ADMIN";
+    } else {
+      this.role = "USER";
+    }
+    return this;
+  }
+
   build(): Person {
     return new Person(
-      this.firstname,
-      this.lastname,
+      this.name,
       this.username,
       this.password,
-      this.email
+      this.email,
+      this.role
     );
   }
 }
