@@ -1,18 +1,25 @@
 import { useState } from "react";
-import { Builder } from "../types/login";
+import { Builder } from "../types/Form";
 
 export default function Login() {
-  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
   const loginUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const user = new Builder()
-      .setUsername(userName)
-      .setPassword(password)
-      .build();
-    console.log(user);
+    const user = new Builder().setEmail(email).setPassword(password).build();
+
+    fetch("http://localhost:5000/loginuser", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user.getAuthenticated()),
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -20,9 +27,9 @@ export default function Login() {
       <form onSubmit={loginUser}>
         <input
           type="text"
-          placeholder="username"
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
+          placeholder="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="text-text"
         />
         <input

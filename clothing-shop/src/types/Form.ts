@@ -39,6 +39,13 @@ export class Person {
     return this.role;
   }
 
+  getAuthenticated(): object {
+    return {
+      email: this.email,
+      password: this.password,
+    };
+  }
+
   toJSON(): object {
     return {
       name: this.name,

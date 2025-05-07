@@ -26,6 +26,14 @@ model User {
   role Role @default(USER) 
 }
 
+model Token {
+  id Int @id @default(autoincrement())
+  tokenId Int //userid
+  refreshToken String //user refresh token
+}
+
+
+
 
 enum Role {
   USER

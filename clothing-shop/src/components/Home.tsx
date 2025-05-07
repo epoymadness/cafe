@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Register from "./Register.tsx";
+import Login from "./Login.tsx";
 
 export default function Home() {
   const [name, setName] = useState<string>("");
@@ -14,8 +14,7 @@ export default function Home() {
   return (
     <div className="bg-gray-900 w-full h-screen border-0 text-white">
       <p className="text-white">{name}</p>
-
-      <Register />
+      <Login />
     </div>
   );
 }

@@ -1,0 +1,19 @@
+POST   http://localhost:5000/saveuser 
+Content-Type: application/json
+
+{"username": "perd", "password": "perd123", "email": "perd@gmail.com", "name": "Perd Benitez"}
+
+####
+
+POST http://localhost:5000/loginuser
+Content-Type: application/json
+
+{
+  "email": "perd@gmail.com",
+  "password": "perd123"
+}
+
+
+####
+GET  http://localhost:5000/cutiepie
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBlcmQiLCJpYXQiOjE3NDY2MTkzNzIsImV4cCI6MTc0NjYyMDI3Mn0.EeytW7ytA77YLM9-g8hY_zXIRITegbJfWYuSRp6tDoA

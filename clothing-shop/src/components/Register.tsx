@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Builder } from "../types/Register";
+import { Builder } from "../types/Form";
 
 export default function Register() {
   const [name, setName] = useState<string>("");
