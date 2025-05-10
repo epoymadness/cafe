@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Builder } from "../types/Form";
+import { useToken } from "../context/TokenContext";
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { setToken } = useToken();
 
   const loginUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,7 +20,12 @@ export default function Login() {
       body: JSON.stringify(user.getAuthenticated()),
     })
       .then((res) => res.json())
-      .then((res) => console.log(res))
+      .then((res) =>
+        setToken({
+          accessToken: res.accessToken,
+          refreshToken: res.refreshToken,
+        })
+      )
       .catch((err) => console.log(err));
   };
 

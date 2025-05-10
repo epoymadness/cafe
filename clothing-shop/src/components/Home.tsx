@@ -1,19 +1,24 @@
-import { useEffect, useState } from "react";
 import Login from "./Login.tsx";
+import { useToken } from "../context/TokenContext.tsx";
+import { useEffect } from "react";
 
 export default function Home() {
-  const [name, setName] = useState<string>("");
+  const { token } = useToken();
 
   useEffect(() => {
-    fetch("http://localhost:5000/cutiepie")
+    fetch("http://localhost:5000/cutiepie", {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token.accessToken}`,
+        "Content-Type": "application/json",
+      },
+    })
       .then((res) => res.json())
-      .then((result) => setName(result.message))
-      .catch((err) => console.log(err));
-  }, []);
+      .then((res) => console.log(res));
+  }, [token]);
 
   return (
     <div className="bg-gray-900 w-full h-screen border-0 text-white">
-      <p className="text-white">{name}</p>
       <Login />
     </div>
   );

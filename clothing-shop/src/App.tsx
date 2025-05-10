@@ -1,9 +1,11 @@
 import Home from "./components/Home";
-
+import { TokenProvider } from "./context/TokenContext";
 function App() {
   return (
     <>
-      <Home />
+      <TokenProvider>
+        <Home />
+      </TokenProvider>
     </>
   );
 }
